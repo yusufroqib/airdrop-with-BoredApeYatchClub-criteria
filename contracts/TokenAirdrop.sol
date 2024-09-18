@@ -9,7 +9,7 @@ contract TokenAirdropWithNFT {
     IERC721Enumerable public constant boredApeYatchClub =
         IERC721Enumerable(0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D);
     bytes32 public immutable merkleRoot;
-    uint256 public constant airdropValue = 100e18;
+    uint256 public constant claimableAmt = 100e18;
 
     address owner;
 
@@ -34,13 +34,13 @@ contract TokenAirdropWithNFT {
         uint foundNFTId = boredApeYatchClub.tokenOfOwnerByIndex(msg.sender, 0);
 
         require(
-            contractBalance >= airdropValue,
+            contractBalance >= claimableAmt,
             "insufficient contract balance"
         );
         usedNFTIds[foundNFTId] = true;
         claimed[msg.sender] = true;
-        token.transfer(msg.sender, airdropValue);
-        emit ClaimSucceful(msg.sender, airdropValue);
+        token.transfer(msg.sender, claimableAmt);
+        emit ClaimSucceful(msg.sender, claimableAmt);
     }
 
     function canClaim(
