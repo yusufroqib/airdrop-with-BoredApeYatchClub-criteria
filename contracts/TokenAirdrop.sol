@@ -25,7 +25,7 @@ contract TokenAirdropWithNFT {
     }
 
     function claim(bytes32[] calldata _merkleProof) external {
-        require(!claimed[msg.sender], "You have already claimed");
+        require(!claimed[msg.sender], "Already claimed");
         require(
             canClaim(msg.sender, _merkleProof),
             "TokenAirdrop: Address is invalid for claim"
