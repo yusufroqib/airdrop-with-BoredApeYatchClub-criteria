@@ -23,7 +23,9 @@ describe("TokenAirdropWithNFT", function () {
 	}
 
 	async function deployTokenAirdropWithNFT() {
-		const { roccoToken, ownerSigner, claimer1Signer } = await deployToken();
+		const { roccoToken, ownerSigner, claimer1Signer } = await loadFixture(
+			deployToken
+		);
 		const { rootHash } = await getProofAndRoot();
 		const TokenAirdropWithNFT = await ethers.getContractFactory(
 			"TokenAirdropWithNFT"
