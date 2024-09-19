@@ -100,7 +100,7 @@ describe("TokenAirdropWithNFT", function () {
 			const { tokenAirdropWithNFT, claimer1Signer } = await loadFixture(
 				deployFixture
 			);
-			const invalidProof = [ethers.ZeroHash]; // Invalid proof
+			const invalidProof = [ethers.ZeroHash];
 			await expect(
 				tokenAirdropWithNFT.connect(claimer1Signer).claim(invalidProof)
 			).to.be.revertedWith("TokenAirdrop: Address is invalid for claim");
@@ -143,7 +143,7 @@ describe("TokenAirdropWithNFT", function () {
 			
 		});
 
-		it("Should return false for invalid claimer", async function () {
+		it("Should revert with right error for invalid claimer", async function () {
 			const { tokenAirdropWithNFT, claimer2Signer } = await loadFixture(
 				deployFixture
 			);
