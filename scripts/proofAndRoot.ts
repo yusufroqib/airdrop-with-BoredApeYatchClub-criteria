@@ -8,10 +8,10 @@ import { BytesLike } from "ethers";
 const CSV_FILE_PATH = "airdrop/airdrop.csv";
 
 export const getProofAndRoot = async (address?: string) => {
-	return new Promise<{ rootHash: string; proof: BytesLike[] | undefined }>(
+	return new Promise<{ rootHash: string; proof: BytesLike[]  }>(
 		(resolve, reject) => {
 			let rootHash: string;
-			let proof: BytesLike[] | undefined;
+			let proof: BytesLike[] = [];
 			const leafNodes: Buffer[] = [];
 
 			fs.createReadStream(CSV_FILE_PATH)

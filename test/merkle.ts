@@ -9,7 +9,7 @@ describe("TokenAirdropWithNFT", function () {
 	async function deployFixture() {
 		const owner = "0xf584F8728B874a6a5c7A8d4d387C9aae9172D621";
 		const claimer1 = "0xF22742F06e4F6d68A8d0B49b9F270bB56affAB38";
-		const claimer2 = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"; 
+		const claimer2 = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
 		await helpers.impersonateAccount(owner);
 		await helpers.impersonateAccount(claimer1);
 		await helpers.impersonateAccount(claimer2);
@@ -71,11 +71,9 @@ describe("TokenAirdropWithNFT", function () {
 				.transfer(tokenAirdropWithNFT, AirdropPool);
 			const claimedAmt = ethers.parseUnits("100", 18);
 
-			if (proof && proof.length > 0) {
 				await expect(tokenAirdropWithNFT.connect(claimer1Signer).claim(proof))
 					.to.emit(tokenAirdropWithNFT, "ClaimSucceful")
 					.withArgs(claimer1Signer.address, claimedAmt);
-			}
 
 			expect(await roccoToken.balanceOf(claimer1Signer.address)).to.equal(
 				claimedAmt
@@ -91,14 +89,11 @@ describe("TokenAirdropWithNFT", function () {
 				.connect(ownerSigner)
 				.transfer(tokenAirdropWithNFT, AirdropPool);
 
-			if (proof && proof.length > 0) {
 				await tokenAirdropWithNFT.connect(claimer1Signer).claim(proof);
 				await expect(
 					tokenAirdropWithNFT.connect(claimer1Signer).claim(proof)
 				).to.be.revertedWith("Already claimed");
-			} else {
-				throw new Error("No proof provided");
-			}
+			
 		});
 
 		it("Should not claim with invalid proof", async function () {
@@ -128,13 +123,10 @@ describe("TokenAirdropWithNFT", function () {
 			);
 			const { proof } = await getProofAndRoot(claimer1Signer.address);
 
-			if (proof && proof.length > 0) {
 				await expect(
 					tokenAirdropWithNFT.connect(claimer1Signer).claim(proof)
 				).to.be.revertedWith("insufficient contract balance");
-			} else {
-				throw new Error("No proof provided");
-			}
+			
 		});
 	});
 
@@ -145,13 +137,10 @@ describe("TokenAirdropWithNFT", function () {
 			);
 			const { proof } = await getProofAndRoot(claimer1Signer.address);
 
-			if (proof && proof.length > 0) {
 				expect(
 					await tokenAirdropWithNFT.canClaim(claimer1Signer.address, proof)
 				).to.be.true;
-			} else {
-				throw new Error("No proof provided");
-			}
+			
 		});
 
 		it("Should return false for invalid claimer", async function () {
